@@ -157,6 +157,16 @@ h1 {
     letter-spacing: .1rem;
 }
 
+.home-config-container {
+    padding: 4rem 10rem;
+}
+
+.home-config-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+}
+
 
 
 

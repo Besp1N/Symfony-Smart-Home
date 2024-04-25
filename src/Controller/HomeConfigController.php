@@ -8,11 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeConfigController extends AbstractController
 {
-    #[Route('/home/config', name: 'app_home_config')]
+    #[Route('/home-config', name: 'app_home_config')]
     public function index(): Response
     {
-        return $this->render('home_config/index.html.twig', [
-            'controller_name' => 'HomeConfigController',
-        ]);
+        return $this->render('home_config/index.html.twig', []);
     }
 }
