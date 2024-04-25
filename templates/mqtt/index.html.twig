@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MqttController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form action="{{ path('app_mqtt_publish') }}" method="POST">
+            <h1>Wielkie odpalanie lampki</h1>
+
+            <div class="buttons">
+                <button type="submit" name="butt" value="ON">Odpalaj lampke</button>
+                <button type="submit" name="butt" value="OFF">Gasimy lampke</button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
