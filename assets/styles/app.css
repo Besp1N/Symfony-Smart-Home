@@ -5,6 +5,10 @@
     font-family: "Poppins", sans-serif;
 }
 
+html {
+    font-size: 62.5%;
+}
+
 .container {
     width: 100%;
     height: 100vh;
@@ -34,3 +38,125 @@ h1 {
     justify-content: center;
     gap: 2rem;
 }
+
+.header, .nav {
+    width: 100%;
+}
+
+.header {
+    padding: 4rem 10rem;
+    font-size: 2rem;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav ul li {
+    position: relative;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav ul li a::after {
+    position: absolute;
+    top: 2.5rem;
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: width 0.3s;
+}
+
+.nav ul li a:hover::after {
+    width: 100%;
+}
+
+.home-img {
+    height: 95vh;
+    background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8)), url("../Images/coding.jpg");
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 100%);
+}
+
+.home-container {
+    padding: 4rem 10rem;
+    color: #fff;
+}
+
+.home-container h1 {
+    font-size: 4rem;
+    letter-spacing: .8rem;
+}
+
+.home-container p {
+    font-size: 2.5rem;
+}
+
+.home-description {
+    margin-top: 2rem;
+}
+
+.home-button {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+}
+
+.home-button a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #fff;
+    padding: 2rem;
+    background-color: #55e0a3;
+    width: 18rem;
+    border-radius: 10rem;
+    transition: transform 0.3s;
+}
+
+.home-button a:hover {
+    transform: translateY(-.5rem);
+}
+
+.home-features-container {
+    margin-top: 5rem;
+    padding: 4rem 10rem;
+}
+
+.home-features-container h2 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+}
+
+.home-features {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-features-item {
+    width: 30%;
+    font-size: 2.5rem;
+    padding: 3rem;
+    background-color: rgba(128, 255, 219, 0.5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.home-features-item p:last-child {
+    font-size: 2.3rem;
+    margin-top: 2rem;
+    letter-spacing: .1rem;
+}
+
+
+
+

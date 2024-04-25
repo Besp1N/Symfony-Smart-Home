@@ -19,7 +19,7 @@ class MqttController extends AbstractController
     private string $port = '1883';
 
 
-    #[Route('/', name: 'app_mqtt')]
+    #[Route('/mqtt', name: 'app_mqtt')]
     public function index(): Response
     {
         return $this->render('mqtt/index.html.twig', []);
@@ -36,10 +36,16 @@ class MqttController extends AbstractController
     public function publish(Request $request): Response
     {
         $state = $request->request->get('butt');
+        $data = [
+            'room' => 'bedroom',
+            'state' => $state
+        ];
+
+        $message = json_encode($data);
 
         $mqtt = new MqttClient($this->server, $this->port);
         $mqtt->connect();
-        $mqtt->publish('dupa/dupa', 'dupa');
+        $mqtt->publish('dupa/dupa', $message);
         $mqtt->disconnect();
         return $this->render('mqtt/index.html.twig', []);
     }
