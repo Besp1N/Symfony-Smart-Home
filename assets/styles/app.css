@@ -167,6 +167,108 @@ h1 {
     margin-top: 4rem;
 }
 
+.login-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8)), url("../Images/coding.jpg");
+}
+
+.login--form p {
+    font-size: 3rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.login--form__inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.login--form__inputs input {
+    width: 22rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 10rem;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login--form {
+    padding: 7rem 4rem;
+    width: 60rem;
+    background-color: #55e0a3;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    border-radius: 2rem;
+}
+
+.login--form__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login--form__buttons button {
+    width: 15rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.login--form__buttons a {
+    width: 20rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10rem;
+}
+
+.login--form__buttons a img {
+    width: 1.8rem;
+    margin-right: 1rem;
+}
+
+.google-login {
+    display: flex;
+    justify-content: center;
+}
+
+.login--form__buttons p {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+}
+
+
+.login--form__buttons p a {
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 1rem 4rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 1000px) {
     .home-img {
         height: auto;
@@ -222,6 +324,30 @@ h1 {
 
     .home-features-container h2 {
         font-size: 6rem;
+    }
+
+    .login-container {
+        background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8));
+    }
+
+    .login--form p:first-child {
+        font-size: 6rem;
+    }
+
+    .login--form__inputs input {
+        width: 40rem;
+        font-size: 3rem;
+        padding: 1rem;
+    }
+
+    .login--form__buttons button {
+        width: 30rem;
+        padding: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .google-login{
+
     }
 }
 
