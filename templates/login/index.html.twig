@@ -5,7 +5,7 @@
 {% block body %}
     <div class="login-container">
         <div class="login--form">
-            <p>Login</p>
+            <p class="login-p">Login</p>
             <form action="{{ path('app_login') }}" method="POST">
                 <div class="login--form__inputs">
                     <input type="text" name="_username" placeholder="Username">
@@ -16,8 +16,6 @@
                     <a href="#" class="google-login">
                         <img class="google-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" />Login via Google
                     </a>
-
-
 
                     <p>Don't have account? <a href="#">Register!</a>
                     </p>
