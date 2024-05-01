@@ -181,6 +181,7 @@ h1 {
     font-weight: 400;
     margin-bottom: 2rem;
     text-align: center;
+    color: #fff;
 }
 
 .login--form__inputs {
@@ -203,7 +204,7 @@ h1 {
 .login--form {
     padding: 7rem 4rem;
     width: 60rem;
-    background-color: #55e0a3;
+    background-color: rgba(85, 224, 163, 0.8);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     border-radius: 2rem;
 }
@@ -327,7 +328,7 @@ h1 {
     }
 
     .login-container {
-        background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8));
+        background-image: linear-gradient(to right bottom, rgb(86, 100, 205), rgb(70, 85, 155));
     }
 
     .login--form p:first-child {
