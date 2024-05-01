@@ -6,7 +6,7 @@
     {{ include('components/_custom_nav.html.twig')  }}
 
     <div class="home-config-container">
-        <h1>Your current config</h1>
+        <h1>Select your home</h1>
 
         <div class="flex">
             <div class="home-config-info">
@@ -22,53 +22,32 @@
                     </div>
                 </div>
             </div>
-
-            <div class="home-config__devices-info">
-                <p>Devices</p>
-                <div class="devices">
-                    <div class="device">
-
-                            <div class="info">
-                                <p>Device 1</p>
-
-                                <p>Device type: Light</p>
-                                <p>Device location: Kitchen</p>
-                                <p>Status: Active</p>
-                            </div>
-
-                            <div class="info">
-                                <p>Device 1</p>
-                                <p>Device type: Light</p>
-                                <p>Device location: Kitchen</p>
-                                <p>Status: Active</p>
-                            </div>
-
-                        <div class="info">
-                            <p>Device 1</p>
-                            <p>Device type: Light</p>
-                            <p>Device location: Kitchen</p>
-                            <p>Status: Active</p>
-                        </div>
-
-                        <div class="info">
-                            <p>Device 1</p>
-                            <p>Device type: Light</p>
-                            <p>Device location: Kitchen</p>
-                            <p>Status: Active</p>
-                        </div>
-
-                        <div class="info">
-                            <p>Device 1</p>
-                            <p>Device type: Light</p>
-                            <p>Device location: Kitchen</p>
-                            <p>Status: Active</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
 
+        <h2 class="add-home">Add Home</h2>
+        <div class="add-home-form">
+            <form action="#" method="post">
+                <div class="form-group">
 
+                    <div class="home-input">
+                        <p>Enter name</p>
+                        <input placeholder="name">
+                    </div>
+
+                    <div class="home-input">
+                        <p>Enter City</p>
+                        <input placeholder="city">
+                    </div>
+
+                    <div class="home-input">
+                        <p>Enter Address</p>
+                        <input placeholder="address">
+                    </div>
+
+                    <button class="add-home-button" type="submit">Add home</button>
+
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}
