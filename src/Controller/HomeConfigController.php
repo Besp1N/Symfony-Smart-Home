@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\House;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +17,7 @@ class HomeConfigController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-        $houses = $user instanceof User ? $user->getHouse() : null;
-
+        $houses = $user instanceof User ? $user->getHouse()->isEmpty() ? null : $user->getHouse() : null;
 
         return $this->render('home_config/index.html.twig', [
             'user' => $user,

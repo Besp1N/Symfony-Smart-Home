@@ -6,10 +6,13 @@
     {{ include('components/_custom_nav.html.twig')  }}
 
     <div class="home-config-container">
-        <h1>Select your home</h1>
-
         <div class="flex">
             <div class="home-config-info flex">
+                {% if houses is null %}
+                    <h1>You don't have any homes</h1>
+                {% else %}
+                <h1>Select your home</h1>
+
                 <div class="home-config__home-info">
                     {% for house in houses %}
 
@@ -25,9 +28,9 @@
                                 <a href="#">Config Home</a>
                             </div>
                         </div>
-
                     {% endfor %}
                 </div>
+                {% endif %}
             </div>
         </div>
 
@@ -56,5 +59,7 @@
                 </div>
             </form>
         </div>
+
     </div>
+
 {% endblock %}
