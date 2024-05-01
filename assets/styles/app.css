@@ -255,6 +255,19 @@ h1 {
     padding: 1rem 4rem;
 }
 
+.form-control {
+    display: flex;
+    justify-content: center;
+}
+
+.form-control div label {
+    display: none;
+}
+
+.form-control div input {
+
+}
+
 
 
 

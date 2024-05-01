@@ -1,19 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
-
 {% block body %}
-    <h1>Register</h1>
+    <div class="login-container">
+        <div class="login--form">
+            <p class="login-p">Register</p>
+            <div class="login--form__inputs">
+                {{ form_start(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+                <div class="form-control">
+                    {{ form_row(registrationForm.email, {'attr': {'placeholder': 'Email'}}) }}
+                </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                <div class="form-control">
+                    {{ form_row(registrationForm.name, {'attr': {'placeholder': 'Name'}}) }}
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <div class="form-control">
+                    {{ form_row(registrationForm.lastName, {'attr': {'placeholder': 'Last Name'}}) }}
+                </div>
+
+                <div class="form-control">
+                    {{ form_row(registrationForm.plainPassword, {'attr': {'placeholder': 'Password'}}) }}
+                </div>
+
+            </div>
+            <div class="login--form__buttons">
+                <button type="submit">Register</button>
+
+                <a href="{{ path('auth_oauth_connect', {service: 'google'}) }}" class="google-login">
+                    <img class="google-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" />Continue with Google
+                </a>
+                <p>Already have account? <a href="{{ path('app_login') }}">Login!</a></p>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}
