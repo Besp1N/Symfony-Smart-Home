@@ -5,6 +5,15 @@
 {% block body %}
     <div class="login-container">
         <div class="login--form">
+            <div class="flash">
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
             <p class="login-p">Login</p>
             <form action="{{ path('app_login', {service: 'myOauthService'}) }}" method="POST">
                 <div class="login--form__inputs">

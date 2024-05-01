@@ -52,6 +52,7 @@ h1 {
     list-style: none;
     display: flex;
     justify-content: flex-end;
+    gap: 5rem;
 }
 
 .nav ul li {
@@ -264,8 +265,14 @@ h1 {
     display: none;
 }
 
-.form-control div input {
+.flash {
+    display: flex;
+    justify-content: center;
+}
 
+.flash-success {
+    color: #227552;
+    font-size: 1rem;
 }
 
 
