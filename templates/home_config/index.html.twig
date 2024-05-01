@@ -3,46 +3,72 @@
 {% block title %}Home config{% endblock %}
 
 {% block body %}
+    {{ include('components/_custom_nav.html.twig')  }}
+
     <div class="home-config-container">
         <h1>Your current config</h1>
-        <div class="home-config-info">
-            <div class="home-config__home-info">
-                <p>Your home</p>
-                <div class="info">
-                    <p>City: Ustka</p>
-                    <p>Address: Zielona 1</p>
-                    <p>Owner: Kacper Karabinowski</p>
-                </div>
-                <div class="config-button">
-                    <a href="#">Config Home</a>
-                </div>
-            </div>
 
-            <div class="home-config__rooms-info">
-                <p>Your rooms</p>
-                <div class="info">
-                    <p>Kitchen</p>
-                    <p>Living room</p>
-                    <p>Bedroom</p>
-                    <p>Bathroom</p>
-                    <p>Garage</p>
-                </div>
-                <div class="config-button">
-                    <a href="#">Config Rooms</a>
+        <div class="flex">
+            <div class="home-config-info">
+                <div class="home-config__home-info">
+                    <p>Your home</p>
+                    <div class="info">
+                        <p>City: Ustka</p>
+                        <p>Address: Zielona 1</p>
+                        <p>Owner: Kacper Karabinowski</p>
+                    </div>
+                    <div class="config-button">
+                        <a href="#">Config Home</a>
+                    </div>
                 </div>
             </div>
 
             <div class="home-config__devices-info">
-                <p>Your devices</p>
-                <div class="info">
-                    <p>Bedroom lamp</p>
-                    <p>Living room lamp</p>
-                    <p>Garage lamp</p>
-                </div>
-                <div class="config-button">
-                    <a href="#">Config Devices</a>
+                <p>Devices</p>
+                <div class="devices">
+                    <div class="device">
+
+                            <div class="info">
+                                <p>Device 1</p>
+
+                                <p>Device type: Light</p>
+                                <p>Device location: Kitchen</p>
+                                <p>Status: Active</p>
+                            </div>
+
+                            <div class="info">
+                                <p>Device 1</p>
+                                <p>Device type: Light</p>
+                                <p>Device location: Kitchen</p>
+                                <p>Status: Active</p>
+                            </div>
+
+                        <div class="info">
+                            <p>Device 1</p>
+                            <p>Device type: Light</p>
+                            <p>Device location: Kitchen</p>
+                            <p>Status: Active</p>
+                        </div>
+
+                        <div class="info">
+                            <p>Device 1</p>
+                            <p>Device type: Light</p>
+                            <p>Device location: Kitchen</p>
+                            <p>Status: Active</p>
+                        </div>
+
+                        <div class="info">
+                            <p>Device 1</p>
+                            <p>Device type: Light</p>
+                            <p>Device location: Kitchen</p>
+                            <p>Status: Active</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 {% endblock %}
