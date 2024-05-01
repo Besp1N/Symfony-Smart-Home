@@ -3,46 +3,63 @@
 {% block title %}Home config{% endblock %}
 
 {% block body %}
+    {{ include('components/_custom_nav.html.twig')  }}
+
     <div class="home-config-container">
-        <h1>Your current config</h1>
-        <div class="home-config-info">
-            <div class="home-config__home-info">
-                <p>Your home</p>
-                <div class="info">
-                    <p>City: Ustka</p>
-                    <p>Address: Zielona 1</p>
-                    <p>Owner: Kacper Karabinowski</p>
-                </div>
-                <div class="config-button">
-                    <a href="#">Config Home</a>
-                </div>
-            </div>
+        <div class="flex">
+            <div class="home-config-info flex">
+                {% if houses is null %}
+                    <h1>You don't have any homes</h1>
+                {% else %}
+                <h1>Select your home</h1>
 
-            <div class="home-config__rooms-info">
-                <p>Your rooms</p>
-                <div class="info">
-                    <p>Kitchen</p>
-                    <p>Living room</p>
-                    <p>Bedroom</p>
-                    <p>Bathroom</p>
-                    <p>Garage</p>
-                </div>
-                <div class="config-button">
-                    <a href="#">Config Rooms</a>
-                </div>
-            </div>
+                <div class="home-config__home-info">
+                    {% for house in houses %}
 
-            <div class="home-config__devices-info">
-                <p>Your devices</p>
-                <div class="info">
-                    <p>Bedroom lamp</p>
-                    <p>Living room lamp</p>
-                    <p>Garage lamp</p>
+                        <div class="flex">
+                            <p class="house-name">{{ house.name }}</p>
+
+                            <div class="info">
+                                <p>City: {{ house.City }}</p>
+                                <p>Address: {{ house.address }}</p>
+                                <p>Owner: {{ house.owner.getName() }}</p>
+                            </div>
+                            <div class="config-button">
+                                <a href="#">Config Home</a>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="config-button">
-                    <a href="#">Config Devices</a>
-                </div>
+                {% endif %}
             </div>
         </div>
+
+        <h2 class="add-home">Add Home</h2>
+        <div class="add-home-form">
+            <form action="{{ path('app_add_house') }}" method="post">
+                <div class="form-group">
+
+                    <div class="home-input">
+                        <p>Enter name</p>
+                        <input placeholder="name" name="Name">
+                    </div>
+
+                    <div class="home-input">
+                        <p>Enter City</p>
+                        <input placeholder="city" name="City">
+                    </div>
+
+                    <div class="home-input">
+                        <p>Enter Address</p>
+                        <input placeholder="address" name="Address">
+                    </div>
+
+                    <button class="add-home-button" type="submit">Add home</button>
+
+                </div>
+            </form>
+        </div>
+
     </div>
+
 {% endblock %}
