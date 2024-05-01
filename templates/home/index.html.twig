@@ -7,7 +7,12 @@
         <div class="header">
             <div class="nav">
                 <ul>
+                    {% if app.user %}
                     <li><a href="{{ path('app_home_config') }}">Home config</a></li>
+                    {% else %}
+                    <li><a href="{{ path('app_login') }}">Login</a></li>
+                    <li><a href="{{ path('app_register') }}">Register</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
