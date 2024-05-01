@@ -6,14 +6,14 @@
     <div class="login-container">
         <div class="login--form">
             <p class="login-p">Login</p>
-            <form action="{{ path('app_login') }}" method="POST">
+            <form action="{{ path('app_login', {service: 'myOauthService'}) }}" method="POST">
                 <div class="login--form__inputs">
                     <input type="text" name="_username" placeholder="Username">
                     <input type="password" name="_password" placeholder="Password">
                 </div>
                 <div class="login--form__buttons">
                     <button type="submit">Login</button>
-                    <a href="#" class="google-login">
+                    <a href="{{ path('auth_oauth_connect', {service: 'google'}) }}" class="google-login">
                         <img class="google-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" />Continue with Google
                     </a>
                     <p>Don't have account? <a href="#">Register!</a></p>
