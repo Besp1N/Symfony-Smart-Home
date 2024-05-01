@@ -276,6 +276,7 @@ h1 {
     position: fixed;
     background-color: #fff;
     z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .custom-nav ul {
@@ -316,10 +317,10 @@ h1 {
 }
 
 .home-config-info {
-    width: 30%;
     margin-top: 4rem;
     padding: 2rem 4rem;
     font-size: 2rem;
+    width: 80%;
 
     background: rgba(255, 255, 255, 0.2);
     border-radius: 16px;
@@ -336,6 +337,7 @@ h1 {
 
 .config-button {
     margin-top: 2rem;
+    margin-bottom: 4rem;
     cursor: pointer;
     transition: all 0.3s;
 
@@ -361,7 +363,19 @@ h1 {
 
 .flex {
     display: flex;
-    gap: 5rem;
+    flex-direction: column;
+    margin-bottom: 5rem;
+}
+
+.house-name {
+    font-size: 3rem;
+}
+
+
+.info {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .home-config__devices-info {
@@ -437,6 +451,10 @@ h1 {
     margin-top: 2rem;
     background-color: #55e0a3;
     color: #000;
+}
+
+.info p {
+    margin: 1rem 0;
 }
 
 
