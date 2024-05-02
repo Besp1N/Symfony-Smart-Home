@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use MongoDB\Driver\Exception\AuthenticationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

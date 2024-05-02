@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\House;
 use App\Entity\User;
+use App\Repository\HouseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +43,32 @@ class HomeConfigController extends AbstractController
         $entityManager->persist($house);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Home added successfully');
         return $this->redirectToRoute('app_home_config');
+    }
+
+    #[Route('/home-config/config/{id}', name: 'app_home_config_config')]
+    public function configDashboard(int $id, HouseRepository $houseRepository): Response
+    {
+        $user = $this->getUser();
+        $house = $houseRepository->find($id);
+
+        if ($house->getOwner() !== $user) {
+            $this->addFlash('error', 'You are not the owner of this house');
+            return $this->redirectToRoute('app_home_config');
+        }
+
+        $rooms = $house->getRoom()->toArray();
+        $devices = [];
+
+        foreach ($rooms as $room) {
+            $devices = array_merge($devices, $room->getDevice()->toArray());
+        }
+
+        return $this->render('home_config/config.html.twig', [
+            'house' => $house,
+            'rooms' => $rooms,
+            'devices' => $devices
+        ]);
     }
 }

@@ -2,7 +2,116 @@
 
 
 {% block body %}
+    {{ include('components/_custom_nav.html.twig')  }}
+    <div class="config-config-container">
+        <div class="config-config-inputs">
+            <div class="config-config1">
+                <p>{{ house.name }}</p>
 
+                <p>Owner: {{ house.owner.getName() }}</p>
+                <p>Address: {{ house.address }}</p>
+                <p>City {{ house.city }}</p>
+                <div class="delete-btn">
+                    <a href="#">Delete Home</a>
+                </div>
+            </div>
+            <div class="config-config2">
+
+                <div class="config-config2-1">
+                    <p>Devices</p>
+                    <div class="config-config2-1-1">
+
+                        {% for device in devices %}
+                        <div class="device">
+                            <p>{{ device.name }} - {{ device.description }} - {{ device.getRoom().getName() }}</p>
+                            <div class="device-controls">
+                                <a href="#" class="on-link">On</a>
+                                <a href="#" class="off-link">Off</a>
+                                <a href="#" class="delete-link">Delete</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                        <!-- Dodaj kolejne urządzenia w ten sam sposób -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="config-show-rooms">
+            {% for room in rooms %}
+            <div class="room-desc">
+                <p>{{ room.name }}</p>
+                <a href="{{ path('app_room_delete', {'roomId': room.id}) }}">Delete</a>
+            </div>
+            {% endfor %}
+
+
+
+        </div>
+
+        <div class="config-forms">
+            <section>
+                <h2 class="add-home">Add Room</h2>
+                <div class="add-home-form">
+                    <form action="{{ path('app_room_add') }}" method="post">
+                        <div class="form-group">
+
+                            <div class="home-input">
+                                <p>Name</p>
+                                <input placeholder="name" name="Name">
+                            </div>
+
+                            <div class="home-input">
+                                <p>Description</p>
+                                <input placeholder="city" name="Description">
+                            </div>
+
+                            <input type="hidden" name="HouseId" value="{{ house.id }}">
+                            <button class="add-home-button" type="submit">Add home</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="add-home">Add Device</h2>
+                <div class="add-home-form">
+                    <form action="{{ path('app_device_add') }}" method="post">
+                        <div class="form-group">
+
+                            <div class="home-input">
+                                <p>Name</p>
+                                <input placeholder="name" name="Name">
+                            </div>
+
+                            <div class="home-input">
+                                <p>Description</p>
+                                <input placeholder="city" name="Description">
+                            </div>
+
+                            <div class="home-input">
+                                <p>Room</p>
+                                <select class="device-room-option" name="Room">
+                                    {% for room in rooms %}
+                                    <option value="{{ room.id }}">{{ room.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button class="add-home-button" type="submit">Add home</button>
+
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+
+
+
+    </div>
 
 
 {% endblock %}
