@@ -21,23 +21,18 @@
                     <p>Devices</p>
                     <div class="config-config2-1-1">
 
+                        {% for device in devices %}
                         <div class="device">
-                            <p>Device 1 - lamp - kitchen</p>
+                            <p>{{ device.name }} - {{ device.description }} - {{ device.getRoom().getName() }}</p>
                             <div class="device-controls">
                                 <a href="#" class="on-link">On</a>
                                 <a href="#" class="off-link">Off</a>
                                 <a href="#" class="delete-link">Delete</a>
                             </div>
                         </div>
+                        {% endfor %}
 
-                        <div class="device">
-                            <p>Device 2 - lamp - bedroom</p>
-                            <div class="device-controls">
-                                <a href="#" class="on-link">On</a>
-                                <a href="#" class="off-link">Off</a>
-                                <a href="#" class="delete-link">Delete</a>
-                            </div>
-                        </div>
+
                         <!-- Dodaj kolejne urządzenia w ten sam sposób -->
                     </div>
                 </div>
@@ -83,7 +78,7 @@
             <section>
                 <h2 class="add-home">Add Device</h2>
                 <div class="add-home-form">
-                    <form action="#" method="post">
+                    <form action="{{ path('app_device_add') }}" method="post">
                         <div class="form-group">
 
                             <div class="home-input">
@@ -98,9 +93,9 @@
 
                             <div class="home-input">
                                 <p>Room</p>
-                                <select class="device-room-option">
+                                <select class="device-room-option" name="Room">
                                     {% for room in rooms %}
-                                    <option>{{ room.name }}</option>
+                                    <option value="{{ room.id }}">{{ room.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

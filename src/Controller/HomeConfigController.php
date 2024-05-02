@@ -62,7 +62,7 @@ class HomeConfigController extends AbstractController
         $devices = [];
 
         foreach ($rooms as $room) {
-            $devices[] = $room->getDevice()->toArray();
+            $devices = array_merge($devices, $room->getDevice()->toArray());
         }
 
         return $this->render('home_config/config.html.twig', [
