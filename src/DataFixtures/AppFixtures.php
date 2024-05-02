@@ -22,6 +22,8 @@ class AppFixtures extends Fixture
     public function load(EntityManagerInterface|ObjectManager $manager): void
     {
         $user = new User();
+        $user->setName('Kacper');
+        $user->setLastName('Karabinowski');
         $user->setEmail('kacper@user.com');
         $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
         $user->setRoles(['ROLE_USER']);

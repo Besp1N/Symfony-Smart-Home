@@ -58,9 +58,17 @@ class HomeConfigController extends AbstractController
             return $this->redirectToRoute('app_home_config');
         }
 
+        $rooms = $house->getRoom()->toArray();
+        $devices = [];
+
+        foreach ($rooms as $room) {
+            $devices[] = $room->getDevice()->toArray();
+        }
 
         return $this->render('home_config/config.html.twig', [
-            'house' => $house
+            'house' => $house,
+            'rooms' => $rooms,
+            'devices' => $devices
         ]);
     }
 }

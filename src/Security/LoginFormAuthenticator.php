@@ -30,7 +30,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return 'auth_oauth_login' === $request->attributes->get('_route') &&
+        return 'app_login' === $request->attributes->get('_route') &&
             $request->get('service') == $this->serviceName;
     }
 

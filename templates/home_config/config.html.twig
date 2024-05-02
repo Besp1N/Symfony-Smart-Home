@@ -44,30 +44,37 @@
             </div>
         </div>
 
+        <div class="config-show-rooms">
+            {% for room in rooms %}
+            <div class="room-desc">
+                <p>{{ room.name }}</p>
+                <a href="{{ path('app_room_delete', {'roomId': room.id}) }}">Delete</a>
+            </div>
+            {% endfor %}
+
+
+
+        </div>
+
         <div class="config-forms">
             <section>
                 <h2 class="add-home">Add Room</h2>
                 <div class="add-home-form">
-                    <form action="#" method="post">
+                    <form action="{{ path('app_room_add') }}" method="post">
                         <div class="form-group">
 
                             <div class="home-input">
-                                <p>Enter name</p>
+                                <p>Name</p>
                                 <input placeholder="name" name="Name">
                             </div>
 
                             <div class="home-input">
-                                <p>Enter City</p>
-                                <input placeholder="city" name="City">
+                                <p>Description</p>
+                                <input placeholder="city" name="Description">
                             </div>
 
-                            <div class="home-input">
-                                <p>Enter Address</p>
-                                <input placeholder="address" name="Address">
-                            </div>
-
+                            <input type="hidden" name="HouseId" value="{{ house.id }}">
                             <button class="add-home-button" type="submit">Add home</button>
-
                         </div>
                     </form>
                 </div>
@@ -80,18 +87,22 @@
                         <div class="form-group">
 
                             <div class="home-input">
-                                <p>Enter name</p>
+                                <p>Name</p>
                                 <input placeholder="name" name="Name">
                             </div>
 
                             <div class="home-input">
-                                <p>Enter City</p>
-                                <input placeholder="city" name="City">
+                                <p>Description</p>
+                                <input placeholder="city" name="Description">
                             </div>
 
                             <div class="home-input">
-                                <p>Enter Address</p>
-                                <input placeholder="address" name="Address">
+                                <p>Room</p>
+                                <select class="device-room-option">
+                                    {% for room in rooms %}
+                                    <option>{{ room.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
 
                             <button class="add-home-button" type="submit">Add home</button>
