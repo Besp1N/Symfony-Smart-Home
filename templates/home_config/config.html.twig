@@ -2,7 +2,33 @@
 
 
 {% block body %}
+    {{ include('components/_custom_nav.html.twig')  }}
+    <div class="config-config-container">
+        <div class="config-config-inputs">
+            <div class="config-config1">
+                <p>{{ house.name }}</p>
 
+                <p>Owner: {{ house.owner.getName() }}</p>
+                <p>Address: {{ house.address }}</p>
+                <p>City {{ house.city }}</p>
+                <div class="delete-btn">
+                    <a href="#">Delete Home</a>
+                </div>
+            </div>
+            <div class="config-config2">
+
+            <div class="config-config2-1">
+                <p>Devices</p>
+                <div class="config-config2-1-1">
+                    <p>Device 1</p>
+                    <p>Device 2</p>
+                    <p>Device 3</p>
+                    <p>Device 4</p>
+                    <p>Device 5</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

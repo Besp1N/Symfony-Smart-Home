@@ -48,7 +48,7 @@ class HomeConfigController extends AbstractController
     }
 
     #[Route('/home-config/config/{id}', name: 'app_home_config_config')]
-    public function config(int $id, HouseRepository $houseRepository): Response
+    public function configDashboard(int $id, HouseRepository $houseRepository): Response
     {
         $user = $this->getUser();
         $house = $houseRepository->find($id);
