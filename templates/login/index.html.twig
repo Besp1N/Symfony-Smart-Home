@@ -8,9 +8,7 @@
             <div class="flash">
                 {% for type, messages in app.flashes %}
                     {% for message in messages %}
-                        <div class="flash-{{ type }}">
-                            {{ message }}
-                        </div>
+                        <div class="flash-{{ type }}">{{ message }}</div>
                     {% endfor %}
                 {% endfor %}
             </div>
