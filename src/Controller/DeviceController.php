@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Device;
 use App\Repository\DeviceRepository;
 use App\Repository\RoomRepository;
+use Composer\XdebugHandler\Status;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,6 +60,17 @@ class DeviceController extends AbstractController
 
         $this->addFlash('success', 'Device deleted successfully');
         return $this->redirectToRoute('app_home_config');
+    }
+
+
+    public function enable(): Response
+    {
+        return new Response(status: 200);
+    }
+
+    public function disable(): Response
+    {
+        return new Response(status: 200);
     }
 
 }

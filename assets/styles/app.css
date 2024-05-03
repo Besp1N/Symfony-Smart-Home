@@ -585,6 +585,7 @@ h1 {
     background-color: #55e0a3;
     width: 10rem;
     border-radius: 10rem;
+    margin-top: 0;
 }
 
 .off-link {
@@ -596,6 +597,7 @@ h1 {
     background-color: #ffcc00;
     width: 10rem;
     border-radius: 10rem;
+    margin-top: 0;
 }
 
 .delete-link {
