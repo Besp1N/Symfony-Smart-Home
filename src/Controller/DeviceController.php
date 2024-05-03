@@ -42,4 +42,23 @@ class DeviceController extends AbstractController
         return $this->redirectToRoute('app_home_config');
     }
 
+    #[Route('/device/delete/{deviceId}', name: 'app_device_delete')]
+    public function delete(int $deviceId, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $device = $deviceRepository->find($deviceId);
+        $owner = $device->getRoom()->getHouse()->getOwner();
+
+        if ($owner !== $user) {
+            $this->addFlash('error', 'This is not your device');
+            return $this->redirectToRoute('app_home_config');
+        }
+
+        $entityManager->remove($device);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Device deleted successfully');
+        return $this->redirectToRoute('app_home_config');
+    }
+
 }

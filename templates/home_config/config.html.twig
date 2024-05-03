@@ -30,7 +30,7 @@
                             <div class="device-controls">
                                 <a href="#" class="on-link">On</a>
                                 <a href="#" class="off-link">Off</a>
-                                <a href="#" class="delete-link">Delete</a>
+                                <a href="{{ path('app_device_delete', {'deviceId': device.id}) }}" class="delete-link">Delete</a>
                             </div>
                         </div>
                         {% endfor %}
