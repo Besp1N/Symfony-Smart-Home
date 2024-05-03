@@ -585,6 +585,7 @@ h1 {
     background-color: #55e0a3;
     width: 10rem;
     border-radius: 10rem;
+    margin-top: 0;
 }
 
 .off-link {
@@ -596,6 +597,7 @@ h1 {
     background-color: #ffcc00;
     width: 10rem;
     border-radius: 10rem;
+    margin-top: 0;
 }
 
 .delete-link {
@@ -616,7 +618,7 @@ h1 {
 
 .device-room-option {
     width: 50%;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .config-show-rooms {
@@ -640,7 +642,7 @@ h1 {
 }
 
 .room-desc p {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .room-desc a {
@@ -655,6 +657,10 @@ h1 {
     border-radius: 10rem;
 }
 
+.config-show-rooms > p {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
 
 
 
