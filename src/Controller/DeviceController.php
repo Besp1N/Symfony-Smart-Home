@@ -7,10 +7,17 @@ use App\Repository\DeviceRepository;
 use App\Repository\RoomRepository;
 use Composer\XdebugHandler\Status;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpMqtt\Client\Exceptions\ConfigurationInvalidException;
+use PhpMqtt\Client\Exceptions\ConnectingToBrokerFailedException;
+use PhpMqtt\Client\Exceptions\DataTransferException;
+use PhpMqtt\Client\Exceptions\ProtocolNotSupportedException;
+use PhpMqtt\Client\Exceptions\RepositoryException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use PhpMqtt\Client\MqttClient;
+
 
 class DeviceController extends AbstractController
 {
@@ -62,12 +69,38 @@ class DeviceController extends AbstractController
         return $this->redirectToRoute('app_home_config');
     }
 
-
-    public function enable(): Response
+    /**
+     * @throws ConfigurationInvalidException
+     * @throws ConnectingToBrokerFailedException
+     * @throws RepositoryException
+     * @throws DataTransferException
+     */
+    #[Route('/device/enable', name: 'app_device_enable')]
+    public function enable(Request $request, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
     {
-        return new Response(status: 200);
+        $deviceId = $request->request->get('DeviceId');
+        $device = $deviceRepository->find($deviceId);
+        $user = $this->getUser();
+        $owner = $device->getRoom()->getHouse()->getOwner();
+
+        if ($owner !== $user) {
+            $this->addFlash('error', 'This is not your device');
+            return $this->redirectToRoute('app_home_config');
+        }
+
+        $device->setStatus(true);
+
+        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
+        $mqtt->connect();
+        $mqtt->publish('test/test', 'test');$mqtt->disconnect();
+
+        $entityManager->persist($device);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home_config');
     }
 
+    #[Route('/device/disable', name: 'app_device_disable')]
     public function disable(): Response
     {
         return new Response(status: 200);

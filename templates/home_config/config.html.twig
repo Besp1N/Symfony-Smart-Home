@@ -28,11 +28,13 @@
                         <div class="device">
                             <p>{{ device.name }} - {{ device.description }} - {{ device.getRoom().getName() }}</p>
                             <div class="device-controls">
-                                <form action="#" method="POST">
+                                <form action="{{ path('app_device_enable') }}" method="POST">
+                                    <input type="hidden" name="DeviceId" value="{{ device.id }}">
                                     <button type="submit" class="on-link">On</button>
                                 </form>
 
                                 <form action="#" method="POST">
+                                    <input type="hidden" name="DeviceId" value="{{ device.id }}">
                                     <button type="submit" class="off-link">Off</button>
                                 </form>
 
