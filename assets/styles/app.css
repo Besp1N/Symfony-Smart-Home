@@ -616,7 +616,7 @@ h1 {
 
 .device-room-option {
     width: 50%;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .config-show-rooms {
@@ -640,7 +640,7 @@ h1 {
 }
 
 .room-desc p {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .room-desc a {
@@ -655,6 +655,10 @@ h1 {
     border-radius: 10rem;
 }
 
+.config-show-rooms > p {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
 
 
 

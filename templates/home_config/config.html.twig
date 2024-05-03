@@ -18,6 +18,9 @@
             <div class="config-config2">
 
                 <div class="config-config2-1">
+                    {% if devices is null %}
+                    <p>No devices</p>
+                    {% else %}
                     <p>Devices</p>
                     <div class="config-config2-1-1">
 
@@ -31,25 +34,26 @@
                             </div>
                         </div>
                         {% endfor %}
-
-
-                        <!-- Dodaj kolejne urządzenia w ten sam sposób -->
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
         <div class="config-show-rooms">
+            {% if rooms is null %}
+            <p>No rooms</p>
+            {% else %}
+            <p>Rooms</p>
             {% for room in rooms %}
             <div class="room-desc">
-                <p>{{ room.name }}</p>
+                <p>{{ room.name }} - {{ room.description }}</p>
                 <a href="{{ path('app_room_delete', {'roomId': room.id}) }}">Delete</a>
             </div>
             {% endfor %}
-
-
-
+            {% endif %}
         </div>
+
 
         <div class="config-forms">
             <section>

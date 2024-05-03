@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use function PHPUnit\Framework\isEmpty;
 
 class HomeConfigController extends AbstractController
 {
@@ -64,6 +65,9 @@ class HomeConfigController extends AbstractController
         foreach ($rooms as $room) {
             $devices = array_merge($devices, $room->getDevice()->toArray());
         }
+
+        $devices = empty($devices) ? null : $devices;
+        $rooms = empty($rooms) ? null : $rooms;
 
         return $this->render('home_config/config.html.twig', [
             'house' => $house,
