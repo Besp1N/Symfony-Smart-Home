@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\House;
 use App\Entity\User;
 use App\Repository\HouseRepository;
+use App\Services\HomeConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use function PHPUnit\Framework\isEmpty;
+
 
 class HomeConfigController extends AbstractController
 {
+    // index func renders a main view of home config section
     #[Route('/home-config', name: 'app_home_config')]
     public function index(): Response
     {
@@ -26,53 +28,37 @@ class HomeConfigController extends AbstractController
         ]);
     }
 
+    /*
+     * addHouse func and configDashboard func bellow use a HomeConfigService to
+     * separate business logic from controller.
+     */
     #[Route('/add-house', name: 'app_add_house')]
-    public function addHouse(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-        $house = new House();
-
-        $houseName = $request->request->get('Name');
-        $houseCity = $request->request->get('City');
-        $houseAddress = $request->request->get('Address');
-
-        $house->setName($houseName);
-        $house->setCity($houseCity);
-        $house->setAddress($houseAddress);
-        $house->setOwner($user);
-
-        $entityManager->persist($house);
-        $entityManager->flush();
+    public function addHouse(
+        Request $request,
+        HomeConfigService $homeConfigService
+    ): Response {
+        $homeConfigService->houseServiceAdd($request);
 
         $this->addFlash('success', 'Home added successfully');
         return $this->redirectToRoute('app_home_config');
     }
 
     #[Route('/home-config/config/{id}', name: 'app_home_config_config')]
-    public function configDashboard(int $id, HouseRepository $houseRepository): Response
-    {
-        $user = $this->getUser();
-        $house = $houseRepository->find($id);
+    public function configDashboard(
+        int $id,
+        HomeConfigService $homeConfigService
+    ): Response {
+        $configData = $homeConfigService->houseServiceConfigDashboard($id);
 
-        if ($house->getOwner() !== $user) {
+        /*
+         * $configData variable has data to render the view, or if sth goes wrong
+         * it returns an empty array. This if statement bellow checks thant and redirects.
+         */
+        if (empty($configData)) {
             $this->addFlash('error', 'You are not the owner of this house');
             return $this->redirectToRoute('app_home_config');
         }
 
-        $rooms = $house->getRoom()->toArray();
-        $devices = [];
-
-        foreach ($rooms as $room) {
-            $devices = array_merge($devices, $room->getDevice()->toArray());
-        }
-
-        $devices = empty($devices) ? null : $devices;
-        $rooms = empty($rooms) ? null : $rooms;
-
-        return $this->render('home_config/config.html.twig', [
-            'house' => $house,
-            'rooms' => $rooms,
-            'devices' => $devices
-        ]);
+        return $this->render('home_config/config.html.twig', $configData);
     }
 }
