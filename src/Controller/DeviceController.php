@@ -101,9 +101,28 @@ class DeviceController extends AbstractController
     }
 
     #[Route('/device/disable', name: 'app_device_disable')]
-    public function disable(): Response
+    public function disable(Request $request, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
     {
-        return new Response(status: 200);
+        $deviceId = $request->request->get('DeviceId');
+        $device = $deviceRepository->find($deviceId);
+        $user = $this->getUser();
+        $owner = $device->getRoom()->getHouse()->getOwner();
+
+        if ($owner !== $user) {
+            $this->addFlash('error', 'This is not your device');
+            return $this->redirectToRoute('app_home_config');
+        }
+
+        $device->setStatus(true);
+
+        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
+        $mqtt->connect();
+        $mqtt->publish('test/test', 'test');$mqtt->disconnect();
+
+        $entityManager->persist($device);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home_config');
     }
 
 }
