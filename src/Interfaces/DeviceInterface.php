@@ -3,7 +3,7 @@
 namespace App\Interfaces;
 
 
-interface CheckDeviceOwnerInterface
+interface DeviceInterface
 {
     public function checkDeviceOwner(): bool;
 }

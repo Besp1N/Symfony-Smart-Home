@@ -4,14 +4,14 @@ namespace App\Services;
 
 use App\Entity\Room;
 use App\Entity\User;
-use App\Interfaces\CheckRoomOwnerInterface;
+use App\Interfaces\RoomInterface;
 use App\Repository\HouseRepository;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 
-readonly class RoomService implements CheckRoomOwnerInterface
+readonly class RoomService implements RoomInterface
 {
     public function __construct(
         private RoomRepository $roomRepository,
@@ -35,6 +35,20 @@ readonly class RoomService implements CheckRoomOwnerInterface
         $room->setHouse($house);
 
         $this->entityManager->persist($room);
+        $this->entityManager->flush();
+    }
+
+    public function roomServiceDelete(Request $request): void
+    {
+        $roomId = $request->request->get('roomId');
+        $room = $this->roomRepository->find($roomId);
+
+        $devices = $room->getDevice();
+        foreach ($devices as $device) {
+           $this->entityManager->remove($device);
+        }
+
+        $this->entityManager->remove($room);
         $this->entityManager->flush();
     }
 

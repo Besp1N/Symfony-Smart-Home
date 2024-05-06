@@ -4,13 +4,13 @@ namespace App\Services;
 
 use App\Entity\House;
 use App\Entity\User;
-use App\Interfaces\CheckHouseOwnerInterface;
+use App\Interfaces\HouseConfigInterface;
 use App\Repository\HouseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 
-readonly class HomeConfigService implements CheckHouseOwnerInterface
+readonly class HomeConfigService implements HouseConfigInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

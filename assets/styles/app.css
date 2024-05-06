@@ -645,7 +645,7 @@ h1 {
     font-size: 2rem;
 }
 
-.room-desc a {
+.room-desc button {
     text-decoration: none;
     text-align: center;
     font-size: 1.5rem;
@@ -655,6 +655,7 @@ h1 {
     background-color: crimson;
     width: 10rem;
     border-radius: 10rem;
+    margin-top: 0;
 }
 
 .config-show-rooms > p {

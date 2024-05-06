@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Interfaces\CheckDeviceOwnerInterface;
+use App\Interfaces\DeviceInterface;
 
-class DeviceService implements CheckDeviceOwnerInterface
+class DeviceService implements DeviceInterface
 {
     public function checkDeviceOwner(): bool
     {

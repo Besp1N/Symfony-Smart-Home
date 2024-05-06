@@ -24,25 +24,12 @@ class RoomController extends AbstractController
         return $this->redirectToRoute('app_home_config');
     }
 
-    #[Route('/room/delete/{roomId}', name: 'app_room_delete')]
-    public function delete(int $roomId, RoomRepository $roomRepository, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-        $room = $roomRepository->find($roomId);
-
-        $houseOwner = $room->getHouse()->getOwner();
-        if ($houseOwner !== $user) {
-            $this->addFlash('error', 'This is not your room');
-            return $this->redirectToRoute('app_home_config');
-        }
-
-        $devices = $room->getDevice();
-        foreach ($devices as $device) {
-            $entityManager->remove($device);
-        }
-
-        $entityManager->remove($room);
-        $entityManager->flush();
+    #[Route('/room/delete', name: 'app_room_delete')]
+    public function delete(
+        Request $request,
+        RoomService $roomService
+    ): Response {
+        $roomService->roomServiceDelete($request);
 
         $this->addFlash('success', 'Room deleted successfully');
         return $this->redirectToRoute('app_home_config');
