@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Repository\HouseRepository;
 use App\Repository\RoomRepository;
+use App\Services\RoomService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,21 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class RoomController extends AbstractController
 {
     #[Route('/room/add', name: 'app_room_add')]
-    public function add(Request $request, EntityManagerInterface $entityManager, HouseRepository $houseRepository): Response
-    {
-        $houseId = $request->request->get('HouseId');
-        $name = $request->request->get('Name');
-        $description = $request->request->get('Description');
-
-        $house = $houseRepository->find($houseId);
-
-        $room = new Room();
-        $room->setName($name);
-        $room->setDescription($description);
-        $room->setHouse($house);
-
-        $entityManager->persist($room);
-        $entityManager->flush();
+    public function add(
+        Request $request,
+        RoomService $roomService
+    ): Response {
+        $roomService->roomServiceAdd($request);
 
         return $this->redirectToRoute('app_home_config');
     }

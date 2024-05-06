@@ -14,7 +14,7 @@ readonly class HomeConfigService implements CheckHouseOwnerInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private readonly HouseRepository $houseRepository,
+        private HouseRepository        $houseRepository,
         private Security               $security
     )
     {}
@@ -62,8 +62,6 @@ readonly class HomeConfigService implements CheckHouseOwnerInterface
             'devices' => $devices,
         ];
     }
-
-
 
     public function checkHouseOwner(House $house, User $user): bool
     {

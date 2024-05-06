@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\House;
 use App\Entity\User;
-use App\Repository\HouseRepository;
 use App\Services\HomeConfigService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +12,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeConfigController extends AbstractController
 {
-    // index func renders a main view of home config section
+    /*
+     * index func renders a main view of home config section
+     */
     #[Route('/home-config', name: 'app_home_config')]
     public function index(): Response
     {
@@ -43,6 +42,9 @@ class HomeConfigController extends AbstractController
         return $this->redirectToRoute('app_home_config');
     }
 
+    /*
+     * This func displays the user config dashboard.
+     */
     #[Route('/home-config/config/{id}', name: 'app_home_config_config')]
     public function configDashboard(
         int $id,
