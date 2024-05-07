@@ -254,7 +254,22 @@ h1 {
 
 .form-control {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+}
+
+.form-control div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control div ul {
+    list-style: none;
+}
+
+.form-control div ul li {
+    text-align: center;
+    color: crimson;
+    font-size: 1rem;
 }
 
 .form-control div label {
