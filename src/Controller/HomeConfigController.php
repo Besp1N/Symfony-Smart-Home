@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 
 class HomeConfigController extends AbstractController
@@ -36,9 +37,24 @@ class HomeConfigController extends AbstractController
         Request $request,
         HomeConfigService $homeConfigService
     ): Response {
-        $homeConfigService->houseServiceAdd($request);
+        try {
+            $homeConfigService->houseServiceAdd($request);
+        } catch (AuthenticationException $exception) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $this->addFlash('success', 'Home added successfully');
+        return $this->redirectToRoute('app_home_config');
+    }
+
+    #[Route('/delete-house', name: 'app_delete_house')]
+    public function deleteHouse(
+        Request $request,
+        HomeConfigService $homeConfigService
+    ): Response {
+        $homeConfigService->homeServiceDelete($request);
+
+        $this->addFlash('success', 'You have delete home successfully');
         return $this->redirectToRoute('app_home_config');
     }
 

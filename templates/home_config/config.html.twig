@@ -12,7 +12,8 @@
                 <p>Address: {{ house.address }}</p>
                 <p>City {{ house.city }}</p>
                 <div class="delete-btn">
-                    <form action="#" method="#">
+                    <form action="{{ path('app_delete_house') }}" method="POST">
+                        <input type="hidden" name="HouseId" value="{{ house.id }}">
                         <button type="submit">Delete Home</button>
                     </form>
                 </div>

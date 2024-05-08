@@ -38,7 +38,6 @@ security:
          - { path: ^/home-config, roles: ROLE_USER }
          - { path: ^/add-house, roles: ROLE_USER }
 
-
 when@test:
     security:
         password_hashers:

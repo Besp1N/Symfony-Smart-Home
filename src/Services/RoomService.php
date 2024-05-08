@@ -26,16 +26,16 @@ readonly class RoomService implements RoomInterface
 
     public function roomServiceAdd(Request $request): void
     {
+        $user = $this->security->getUser();
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
+
         $houseId = $request->request->get('HouseId');
         $name = $request->request->get('Name');
         $description = $request->request->get('Description');
 
         $house = $this->houseRepository->find($houseId);
-
-        $user = $this->security->getUser();
-        if (!$user instanceof User) {
-            throw new AuthenticationException('Authentication Exception.');
-        }
 
         if (!$this->checkRoomOwner($house, $user)) {
             throw new AccessDeniedException('Access Denied.');
@@ -52,14 +52,14 @@ readonly class RoomService implements RoomInterface
 
     public function roomServiceDelete(Request $request): void
     {
-        $roomId = $request->request->get('roomId');
-        $room = $this->roomRepository->find($roomId);
-        $house = $room->getHouse();
-
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             throw new AuthenticationException('Authentication Exception.');
         }
+
+        $roomId = $request->request->get('roomId');
+        $room = $this->roomRepository->find($roomId);
+        $house = $room->getHouse();
 
         if (!$this->checkRoomOwner($house, $user)) {
             throw new AccessDeniedException('Access Denied.');

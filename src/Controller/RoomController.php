@@ -25,9 +25,6 @@ class RoomController extends AbstractController
             $roomService->roomServiceAdd($request);
         } catch (AuthenticationException $exception) {
             return $this->redirectToRoute('app_login');
-        } catch (AccessDeniedException $exception) {
-            $this->addFlash('error', 'You are no allowed to do this.');
-            return $this->redirectToRoute('app_home_config');
         }
 
         return $this->redirectToRoute('app_home_config');
@@ -42,9 +39,6 @@ class RoomController extends AbstractController
             $roomService->roomServiceDelete($request);
         } catch (AuthenticationException $exception) {
             return $this->redirectToRoute('app_login');
-        } catch (AccessDeniedException $exception) {
-            $this->addFlash('error', 'You are no allowed to do this.');
-            return $this->redirectToRoute('app_home_config');
         }
 
         $this->addFlash('success', 'Room deleted successfully');

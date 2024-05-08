@@ -9,13 +9,14 @@ use App\Repository\HouseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 readonly class HomeConfigService implements HouseConfigInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private HouseRepository        $houseRepository,
-        private Security               $security
+        private Security               $security,
     )
     {}
 
@@ -25,6 +26,10 @@ readonly class HomeConfigService implements HouseConfigInterface
     public function houseServiceAdd(Request $request): void
     {
         $user = $this->security->getUser();
+
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
 
         $houseName = $request->request->get('Name');
         $houseCity = $request->request->get('City');
@@ -38,6 +43,35 @@ readonly class HomeConfigService implements HouseConfigInterface
         $house->setOwner($user);
 
         $this->entityManager->persist($house);
+        $this->entityManager->flush();
+    }
+
+    public function homeServiceDelete(Request $request): void
+    {
+        $user = $this->security->getUser();
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
+
+        $houseId = $request->request->get('HouseId');
+        $house = $this->houseRepository->find($houseId);
+
+        $rooms = $house->getRoom()->toArray();
+        $devices = [];
+
+        foreach ($rooms as $room) {
+            $devices = array_merge($devices, $rooms);
+        }
+
+        foreach ($rooms as $room) {
+            $this->entityManager->remove($room);
+        }
+
+        foreach ($devices as $device) {
+            $this->entityManager->remove($device);
+        }
+
+        $this->entityManager->remove($house);
         $this->entityManager->flush();
     }
 

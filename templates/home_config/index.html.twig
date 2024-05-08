@@ -7,18 +7,21 @@
 
     <div class="home-config-container">
             <div class="home-config-info flex">
+
+                <div class="flash">
+                    {% for type, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">{{ message }} !</div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
                 {% if houses is null %}
                     <h1>You don't have any homes</h1>
                 {% else %}
                 <h1>Select your home</h1>
 
-                    <div class="flash">
-                        {% for type, messages in app.flashes %}
-                            {% for message in messages %}
-                                <div class="flash-{{ type }}">{{ message }} !</div>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
+
                 <div class="home-config__home-info">
                     {% for house in houses %}
 
