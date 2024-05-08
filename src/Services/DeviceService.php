@@ -8,8 +8,12 @@ use App\Entity\User;
 use App\Interfaces\DeviceInterface;
 use App\Repository\DeviceRepository;
 use App\Repository\RoomRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpMqtt\Client\Exceptions\ConfigurationInvalidException;
+use PhpMqtt\Client\Exceptions\ConnectingToBrokerFailedException;
+use PhpMqtt\Client\Exceptions\DataTransferException;
+use PhpMqtt\Client\Exceptions\RepositoryException;
+use PhpMqtt\Client\MqttClient;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -53,23 +57,53 @@ readonly class DeviceService implements DeviceInterface
     public function deviceServiceDelete(Request $request): void
     {
         $user = $this->security->getUser();
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
 
         $deviceId = $request->request->get('DeviceId');
         $device = $this->deviceRepository->find($deviceId);
         $room = $device->getRoom();
 
+        if (!$this->checkDeviceOwner($room, $user)) {
+            throw new AccessDeniedException('Access Denied.');
+        }
+
+        $this->entityManager->remove($device);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @throws ConfigurationInvalidException
+     * @throws ConnectingToBrokerFailedException
+     * @throws RepositoryException
+     * @throws DataTransferException
+     */
+
+    public function deviceServiceToggle(Request $request, bool $status): void
+    {
+        $user = $this->security->getUser();
         if (!$user instanceof User) {
             throw new AuthenticationException('Authentication Exception.');
         }
+
+        $deviceId = $request->request->get('DeviceId');
+        $device = $this->deviceRepository->find($deviceId);
+        $room = $device->getRoom();
 
         if (!$this->checkDeviceOwner($room, $user)) {
             throw new AccessDeniedException('Access Denied.');
         }
 
+        $device->setStatus($status);
 
-        $this->entityManager->remove($device);
+        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
+        $mqtt->connect();
+        $mqtt->publish('test/test', 'test');
+        $mqtt->disconnect();
+
+        $this->entityManager->persist($device);
         $this->entityManager->flush();
-
     }
 
     public function checkDeviceOwner(Room $room, User $user): bool

@@ -32,7 +32,7 @@ class HomeConfigController extends AbstractController
      * addHouse func and configDashboard func bellow use a HomeConfigService to
      * separate business logic from controller.
      */
-    #[Route('/add-house', name: 'app_add_house')]
+    #[Route('/house/add', name: 'app_add_house')]
     public function addHouse(
         Request $request,
         HomeConfigService $homeConfigService
@@ -47,7 +47,7 @@ class HomeConfigController extends AbstractController
         return $this->redirectToRoute('app_home_config');
     }
 
-    #[Route('/delete-house', name: 'app_delete_house')]
+    #[Route('/house/delete', name: 'app_delete_house')]
     public function deleteHouse(
         Request $request,
         HomeConfigService $homeConfigService

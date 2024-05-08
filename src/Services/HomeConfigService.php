@@ -60,7 +60,7 @@ readonly class HomeConfigService implements HouseConfigInterface
         $devices = [];
 
         foreach ($rooms as $room) {
-            $devices = array_merge($devices, $rooms);
+            $devices = array_merge($devices, $room->getDevice()->toArray());
         }
 
         foreach ($rooms as $room) {
