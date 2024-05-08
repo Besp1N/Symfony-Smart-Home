@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Device;
 use App\Repository\DeviceRepository;
 use App\Repository\RoomRepository;
+use App\Services\DeviceService;
 use Composer\XdebugHandler\Status;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpMqtt\Client\Exceptions\ConfigurationInvalidException;
@@ -17,36 +18,27 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use PhpMqtt\Client\MqttClient;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 
 class DeviceController extends AbstractController
 {
     #[Route('/device/add/', name: 'app_device_add')]
-    public function add(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository): Response
-    {
-        $name = $request->request->get('Name');
-        $description = $request->request->get('Description');
-        $roomId = $request->request->get('Room');
-        $room = $roomRepository->find($roomId);
-
-        $owner = $room->getHouse()->getOwner();
-        $this->getUser();
-
-        if ($owner !== $this->getUser()) {
-            $this->addFlash('error', 'You are not the owner of this house');
+    public function add(
+        Request $request,
+        DeviceService $deviceService
+    ): Response {
+        try {
+            $deviceService->deviceServiceAdd($request);
+        } catch (AuthenticationException $exception) {
+            return $this->redirectToRoute('app_login');
+        } catch (AccessDeniedException $exception) {
+            $this->addFlash('error', 'You are not allowed to do that.');
             return $this->redirectToRoute('app_home_config');
         }
 
-        $device = new Device();
-        $device->setName($name);
-        $device->setDescription($description);
-        $device->setStatus(true);
-        $device->setRoom($room);
-
-        $entityManager->persist($device);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Device added successfully');
+        $this->addFlash('success', 'Device added successfully.');
         return $this->redirectToRoute('app_home_config');
     }
 

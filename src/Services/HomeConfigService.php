@@ -56,6 +56,9 @@ readonly class HomeConfigService implements HouseConfigInterface
             $devices = array_merge($devices, $room->getDevice()->toArray());
         }
 
+        if (empty($rooms)) $rooms = null;
+        if (empty($devices)) $devices = null;
+
         return [
             'house' => $house,
             'rooms' => $rooms,

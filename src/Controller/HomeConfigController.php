@@ -61,6 +61,7 @@ class HomeConfigController extends AbstractController
             return $this->redirectToRoute('app_home_config');
         }
 
+
         return $this->render('home_config/config.html.twig', $configData);
     }
 }
