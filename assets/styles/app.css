@@ -161,6 +161,7 @@ h1 {
 .home-config-container {
     margin-top: 10rem;
     padding: 4rem 10rem;
+    height: 100vh;
     background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8));
 }
 
@@ -793,6 +794,10 @@ h1 {
 
     .google-login{
 
+    }
+
+    .home-config__home-info {
+        justify-content: center;
     }
 }
 

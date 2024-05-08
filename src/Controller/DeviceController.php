@@ -67,6 +67,7 @@ class DeviceController extends AbstractController
     ): Response {
         $deviceService->deviceServiceToggle($request, true);
 
+        $this->addFlash('success', 'Your device has been enabled');
         return $this->redirectToRoute('app_home_config');
     }
 
@@ -83,6 +84,7 @@ class DeviceController extends AbstractController
     ): Response {
         $deviceService->deviceServiceToggle($request, false);
 
+        $this->addFlash('success', 'Your device has been disabled');
         return $this->redirectToRoute('app_home_config');
     }
 
