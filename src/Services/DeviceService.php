@@ -6,6 +6,7 @@ use App\Entity\Device;
 use App\Entity\Room;
 use App\Entity\User;
 use App\Interfaces\DeviceInterface;
+use App\Repository\DeviceRepository;
 use App\Repository\RoomRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +19,7 @@ readonly class DeviceService implements DeviceInterface
 {
     public function __construct(
         private RoomRepository $roomRepository,
+        private DeviceRepository $deviceRepository,
         private EntityManagerInterface $entityManager,
         private Security $security
     ) {}
@@ -46,6 +48,28 @@ readonly class DeviceService implements DeviceInterface
 
         $this->entityManager->persist($device);
         $this->entityManager->flush();
+    }
+
+    public function deviceServiceDelete(Request $request): void
+    {
+        $user = $this->security->getUser();
+
+        $deviceId = $request->request->get('DeviceId');
+        $device = $this->deviceRepository->find($deviceId);
+        $room = $device->getRoom();
+
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
+
+        if (!$this->checkDeviceOwner($room, $user)) {
+            throw new AccessDeniedException('Access Denied.');
+        }
+
+
+        $this->entityManager->remove($device);
+        $this->entityManager->flush();
+
     }
 
     public function checkDeviceOwner(Room $room, User $user): bool

@@ -585,6 +585,17 @@ h1 {
     margin-top: 0;
 }
 
+.delete-device-btn {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #fff;
+    padding: 1rem;
+    background-color: crimson;
+    width: 12rem;
+    border-radius: 10rem;
+    margin-top: 0;
+}
+
 .config-config2-1 > p {
     font-size: 3rem;
     margin-bottom: 2rem;

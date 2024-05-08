@@ -40,7 +40,11 @@
                                     <button type="submit" class="off-link">Off</button>
                                 </form>
 
-                                <a href="{{ path('app_device_delete', {'deviceId': device.id}) }}" class="delete-link">Delete</a>
+                                <form action="{{ path('app_device_delete') }}" method="POST">
+                                    <input type="hidden" name="DeviceId" value="{{ device.id }}">
+                                    <button type="submit" class="delete-device-btn">Delete</button>
+                                </form>
+
                             </div>
                         </div>
                         {% endfor %}

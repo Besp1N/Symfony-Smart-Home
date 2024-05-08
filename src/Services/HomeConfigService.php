@@ -25,13 +25,13 @@ readonly class HomeConfigService implements HouseConfigInterface
     public function houseServiceAdd(Request $request): void
     {
         $user = $this->security->getUser();
-        $house = new House();
 
         $houseName = $request->request->get('Name');
         $houseCity = $request->request->get('City');
         $houseAddress = $request->request->get('Address');
 
         // setting up new house
+        $house = new House();
         $house->setName($houseName);
         $house->setCity($houseCity);
         $house->setAddress($houseAddress);
