@@ -12,7 +12,9 @@
                 <p>Address: {{ house.address }}</p>
                 <p>City {{ house.city }}</p>
                 <div class="delete-btn">
-                    <a href="#">Delete Home</a>
+                    <form action="#" method="#">
+                        <button type="submit">Delete Home</button>
+                    </form>
                 </div>
             </div>
             <div class="config-config2">
@@ -33,7 +35,7 @@
                                     <button type="submit" class="on-link">On</button>
                                 </form>
 
-                                <form action="#" method="POST">
+                                <form action="{{ path('app_device_disable') }}" method="POST">
                                     <input type="hidden" name="DeviceId" value="{{ device.id }}">
                                     <button type="submit" class="off-link">Off</button>
                                 </form>
@@ -56,7 +58,11 @@
             {% for room in rooms %}
             <div class="room-desc">
                 <p>{{ room.name }} - {{ room.description }}</p>
-                <a href="{{ path('app_room_delete', {'roomId': room.id}) }}">Delete</a>
+
+                <form action="{{ path('app_room_delete') }}" method="POST">
+                    <input type="hidden" name="roomId" value="{{ room.id }}">
+                    <button type="submit">Delete</button>
+                </form>
             </div>
             {% endfor %}
             {% endif %}

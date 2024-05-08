@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
@@ -23,8 +22,8 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function __construct(
         UrlGeneratorInterface           $urlGenerator,
-        private readonly UserRepository $userRepository)
-    {
+        private readonly UserRepository $userRepository,
+    ) {
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -37,8 +36,10 @@ class LoginFormAuthenticator extends AbstractAuthenticator
     public function authenticate(Request $request): SelfValidatingPassport
     {
         $email = $request->request->get('_username', '');
+        $user = $this->userRepository->findOneBy(['email' => $email]);
 
         $request->getSession()->set('LAST_USERNAME', $email);
+        $request->getSession()->set('userId', $user->getId());
 
         return new SelfValidatingPassport(
             new UserBadge($email, function() use ($email) {
@@ -61,6 +62,6 @@ class LoginFormAuthenticator extends AbstractAuthenticator
             $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('auth_login'));
+        return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 }
