@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class DeviceController extends AbstractController
 {
-    #[Route('/device/add/', name: 'app_device_add')]
+    #[Route('/device/add', name: 'app_device_add')]
     public function add(
         Request $request,
         DeviceService $deviceService
@@ -33,29 +33,22 @@ class DeviceController extends AbstractController
             $deviceService->deviceServiceAdd($request);
         } catch (AuthenticationException $exception) {
             return $this->redirectToRoute('app_login');
-        } catch (AccessDeniedException $exception) {
-            $this->addFlash('error', 'You are not allowed to do that.');
-            return $this->redirectToRoute('app_home_config');
         }
 
         $this->addFlash('success', 'Device added successfully.');
         return $this->redirectToRoute('app_home_config');
     }
 
-    #[Route('/device/delete/{deviceId}', name: 'app_device_delete')]
-    public function delete(int $deviceId, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-        $device = $deviceRepository->find($deviceId);
-        $owner = $device->getRoom()->getHouse()->getOwner();
-
-        if ($owner !== $user) {
-            $this->addFlash('error', 'This is not your device');
-            return $this->redirectToRoute('app_home_config');
+    #[Route('/device/delete', name: 'app_device_delete')]
+    public function delete(
+        Request $request,
+        DeviceService $deviceService
+    ): Response {
+        try {
+            $deviceService->deviceServiceDelete($request);
+        } catch (AuthenticationException $exception) {
+            return $this->redirectToRoute('app_login');
         }
-
-        $entityManager->remove($device);
-        $entityManager->flush();
 
         $this->addFlash('success', 'Device deleted successfully');
         return $this->redirectToRoute('app_home_config');
@@ -68,52 +61,30 @@ class DeviceController extends AbstractController
      * @throws DataTransferException
      */
     #[Route('/device/enable', name: 'app_device_enable')]
-    public function enable(Request $request, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
-    {
-        $deviceId = $request->request->get('DeviceId');
-        $device = $deviceRepository->find($deviceId);
-        $user = $this->getUser();
-        $owner = $device->getRoom()->getHouse()->getOwner();
+    public function enable(
+        Request $request,
+        DeviceService $deviceService
+    ): Response {
+        $deviceService->deviceServiceToggle($request, true);
 
-        if ($owner !== $user) {
-            $this->addFlash('error', 'This is not your device');
-            return $this->redirectToRoute('app_home_config');
-        }
-
-        $device->setStatus(true);
-
-        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
-        $mqtt->connect();
-        $mqtt->publish('test/test', 'test');$mqtt->disconnect();
-
-        $entityManager->persist($device);
-        $entityManager->flush();
-
+        $this->addFlash('success', 'Your device has been enabled');
         return $this->redirectToRoute('app_home_config');
     }
 
+    /**
+     * @throws ConnectingToBrokerFailedException
+     * @throws ConfigurationInvalidException
+     * @throws RepositoryException
+     * @throws DataTransferException
+     */
     #[Route('/device/disable', name: 'app_device_disable')]
-    public function disable(Request $request, DeviceRepository $deviceRepository, EntityManagerInterface $entityManager): Response
-    {
-        $deviceId = $request->request->get('DeviceId');
-        $device = $deviceRepository->find($deviceId);
-        $user = $this->getUser();
-        $owner = $device->getRoom()->getHouse()->getOwner();
+    public function disable(
+        Request $request,
+        DeviceService $deviceService
+    ): Response {
+        $deviceService->deviceServiceToggle($request, false);
 
-        if ($owner !== $user) {
-            $this->addFlash('error', 'This is not your device');
-            return $this->redirectToRoute('app_home_config');
-        }
-
-        $device->setStatus(true);
-
-        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
-        $mqtt->connect();
-        $mqtt->publish('test/test', 'test');$mqtt->disconnect();
-
-        $entityManager->persist($device);
-        $entityManager->flush();
-
+        $this->addFlash('success', 'Your device has been disabled');
         return $this->redirectToRoute('app_home_config');
     }
 

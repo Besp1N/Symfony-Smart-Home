@@ -63,7 +63,7 @@ abstract class AbstractOAuthAuthenticator extends OAuth2Authenticator
             $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         }
 
-        return new RedirectResponse('auth_oauth_login');
+        return new RedirectResponse('/login');
     }
 
     public function authenticate(Request $request): SelfValidatingPassport

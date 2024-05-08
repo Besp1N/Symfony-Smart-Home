@@ -161,6 +161,7 @@ h1 {
 .home-config-container {
     margin-top: 10rem;
     padding: 4rem 10rem;
+    height: 100vh;
     background-image: linear-gradient(to right bottom, rgba(91, 112, 243, 0.8), rgba(72, 80, 185, 0.8));
 }
 
@@ -585,6 +586,17 @@ h1 {
     margin-top: 0;
 }
 
+.delete-device-btn {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #fff;
+    padding: 1rem;
+    background-color: crimson;
+    width: 12rem;
+    border-radius: 10rem;
+    margin-top: 0;
+}
+
 .config-config2-1 > p {
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -782,6 +794,10 @@ h1 {
 
     .google-login{
 
+    }
+
+    .home-config__home-info {
+        justify-content: center;
     }
 }
 

@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class RoomController extends AbstractController
 {
@@ -19,7 +21,11 @@ class RoomController extends AbstractController
         Request $request,
         RoomService $roomService
     ): Response {
-        $roomService->roomServiceAdd($request);
+        try {
+            $roomService->roomServiceAdd($request);
+        } catch (AuthenticationException $exception) {
+            return $this->redirectToRoute('app_login');
+        }
 
         return $this->redirectToRoute('app_home_config');
     }
@@ -29,7 +35,11 @@ class RoomController extends AbstractController
         Request $request,
         RoomService $roomService
     ): Response {
-        $roomService->roomServiceDelete($request);
+        try {
+            $roomService->roomServiceDelete($request);
+        } catch (AuthenticationException $exception) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $this->addFlash('success', 'Room deleted successfully');
         return $this->redirectToRoute('app_home_config');

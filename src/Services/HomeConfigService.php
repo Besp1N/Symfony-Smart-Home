@@ -9,13 +9,14 @@ use App\Repository\HouseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 readonly class HomeConfigService implements HouseConfigInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private HouseRepository        $houseRepository,
-        private Security               $security
+        private Security               $security,
     )
     {}
 
@@ -25,19 +26,52 @@ readonly class HomeConfigService implements HouseConfigInterface
     public function houseServiceAdd(Request $request): void
     {
         $user = $this->security->getUser();
-        $house = new House();
+
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
 
         $houseName = $request->request->get('Name');
         $houseCity = $request->request->get('City');
         $houseAddress = $request->request->get('Address');
 
         // setting up new house
+        $house = new House();
         $house->setName($houseName);
         $house->setCity($houseCity);
         $house->setAddress($houseAddress);
         $house->setOwner($user);
 
         $this->entityManager->persist($house);
+        $this->entityManager->flush();
+    }
+
+    public function homeServiceDelete(Request $request): void
+    {
+        $user = $this->security->getUser();
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Authentication Exception.');
+        }
+
+        $houseId = $request->request->get('HouseId');
+        $house = $this->houseRepository->find($houseId);
+
+        $rooms = $house->getRoom()->toArray();
+        $devices = [];
+
+        foreach ($rooms as $room) {
+            $devices = array_merge($devices, $room->getDevice()->toArray());
+        }
+
+        foreach ($rooms as $room) {
+            $this->entityManager->remove($room);
+        }
+
+        foreach ($devices as $device) {
+            $this->entityManager->remove($device);
+        }
+
+        $this->entityManager->remove($house);
         $this->entityManager->flush();
     }
 

@@ -10,5 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 interface HouseConfigInterface
 {
     public function houseServiceAdd(Request $request): void;
+    public function homeServiceDelete(Request $request): void;
     public function checkHouseOwner(House $house, User $user): bool;
 }
