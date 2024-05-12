@@ -97,9 +97,16 @@ readonly class DeviceService implements DeviceInterface
 
         $device->setStatus($status);
 
-        $mqtt = new MqttClient('broker.mqtt.cool', '1883');
+        $data = [
+            'port' => $device->getDescription(),
+            'status' => $status
+        ];
+
+        $message = json_encode($data);
+
+        $mqtt = new MqttClient('broker.mqtt.cool:1883', '1883');
         $mqtt->connect();
-        $mqtt->publish('test/test', 'test');
+        $mqtt->publish('/dupa/dupa', $message);
         $mqtt->disconnect();
 
         $this->entityManager->persist($device);
