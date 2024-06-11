@@ -167,7 +167,7 @@ symfony console doctrine:fixtures:load
 You can generate your own tokens to try OAuth2 login on console google and paste them in .env file
 
 | ./Security | Description |
-| :-------- | :------------------------- |
+| :-------- |  :------------------------- |
 | AbstractOAuthAuthenticator | Abstract class for GoogleAuthenticator |
 | GoogleAuthenticator| extends abstract class to implement OAuth2 login |
 | OAuthRegistrationService| Supports new Google users |
@@ -178,7 +178,7 @@ You can generate your own tokens to try OAuth2 login on console google and paste
 Used to separate logic from controllers
 
 | Service | Description |
-| :-------- | :------------------------- |
+| :-------- |:------------------------- |
 | HomeConfigService / HouseConfigInterface | Supports HomeConfigController |
 | RoomService / RoomInterface| Supports RoomController |
 | DeviceService / DeviceInterface| Supports DeviceController |
