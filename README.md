@@ -153,7 +153,7 @@ symfony console doctrine:fixtures:load
 
 
 | Controller name | Description |
-| :--------  :------------------------- |
+| :-------- | :------------------------- |
 | HomeController | Landing page Controller |
 | HomeConfigController| Home Controller CRUD |
 | DeviceController| Device CRUD + enable and disable functions |
